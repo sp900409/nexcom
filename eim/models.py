@@ -25,7 +25,7 @@ class OldKcs(models.Model):
 
 class Operation(models.Model):
     id = models.AutoField(db_column="Id", primary_key=True)
-    operation_time = models.DateTimeField(db_column="OperationTime", default=timezone.now, blank=False, null=False)
+    time = models.DateTimeField(db_column="Time", auto_now=True)
     target = models.CharField(db_column="Target", max_length=50, blank=False, null=True)
     action_type = models.CharField(db_column="Action_type", max_length=50, blank=False, null=False)
     content = models.CharField(db_column="Content", max_length=2000, blank=False, null=True)
@@ -34,7 +34,8 @@ class Operation(models.Model):
         managed = True
 
     def __str__(self):
-        return self.operation_time, "operation on ", self.target
+        return "operation on " + self.target
+
 
 class Unit(models.Model):
     TYPES_CHOICES = (
@@ -42,7 +43,7 @@ class Unit(models.Model):
         ('SVRV6', 'Server V.6'),
         ('JBOD', 'JBOD'),
         ('SWICH', 'Switch'),
-        )
+    )
     STATUS_CHOICES = (
         ('Created', 'Created'),
         ('Received', 'Received'),

@@ -1,0 +1,21 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/operation_list.html</h2>
+    {% if messages %} {% for message in messages %}
+        <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}{% endif %}
+
+    <div>
+        {% if operation_list %}
+            {% for operation in operation_list %}
+                <a href="{% url 'operation_detail'  operation.id  %}">{{ operation.target }}</a>
+            {% endfor %}
+        {% else %}
+            <p class="alert alert-danger">No records available! Add  a record <a href="{% url 'operation_create' %}   ">here</a>.</p>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

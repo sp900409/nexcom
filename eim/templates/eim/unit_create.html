@@ -13,10 +13,12 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="id_old_kcs_number">Old kcs number:</label>
-                <input class="form-control" type="text" name="old_kcs_number" id="id_old_kcs_number" maxlength="30" required=""></div>
+                <input class="form-control" type="text" name="old_kcs_number" id="id_old_kcs_number" maxlength="30"
+                       required=""></div>
             <div class="form-group">
                 <label for="id_serial_number">Serial number:</label>
-                <input class="form-control" type="text" name="serial_number" required="" id="id_serial_number" maxlength="30"></div>
+                <input class="form-control" type="text" name="serial_number" required="" id="id_serial_number"
+                       maxlength="30"></div>
             <div class="form-group">
                 <label for="id_type">Type:</label> <select class="form-control" name="type" required="" id="id_type">
                 <option value="" selected="">----</option>
@@ -38,7 +40,10 @@
             </select></div>
             <div class="form-group">
                 <label for="id_memo">Memo:</label>
-                <input class="form-control" type="text" name="memo" id="id_memo" maxlength="2000" required=""></div>
+                <textarea name="memo" class="form-control" id="" cols="30" rows="10" id="id_memo" maxlength="2000"
+                          required=""></textarea>
+                {#                <input class="form-control" type="text" name="memo" id="id_memo" maxlength="2000" required="">#}
+            </div>
             <div class="form-group">
                 <input type="checkbox" name="is_active" id="id_is_active" hidden checked></div>
             <button class="btn btn-default" type="submit">Submit</button>

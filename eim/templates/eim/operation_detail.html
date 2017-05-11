@@ -1,0 +1,22 @@
+{#{% extends 'eim/eim_template.html' %}#}
+{##}
+{#{% block detail %}#}
+    <h2>Page PATH /eim/operation_detail.html</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+        {% endfor %}{% endif %}
+
+    <div class="row">
+        {% if operation %}
+            Here is the detail information for <b>{{ operation.target }} at {{ operation.time }}</b>!
+            {{ operation.id }} / {{ operation.time }} /
+            {{ operation.target }} / {{ operation.action_type }} / {{ operation.content }}
+
+        {% endif %}
+
+    </div>
+
+{#{% endblock %}#}
+
+

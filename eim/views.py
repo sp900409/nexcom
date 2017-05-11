@@ -7,8 +7,8 @@ from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from eim.forms import OldKcsForm, UnitForm
-from eim.models import OldKcs, Unit
+from eim.forms import OldKcsForm, UnitForm, OperationForm
+from eim.models import OldKcs, Unit, Operation
 
 
 def home(request):
@@ -25,7 +25,7 @@ def OldKcsList(request):
 
     if query:
         obj_list = obj_list.filter(
-                Q(kcs_number__icontains=query)
+            Q(kcs_number__icontains=query)
         ).distinct()
 
     # TODO: revise paginator here
@@ -111,5 +111,47 @@ def UnitDetail(request, id=None):
     context = {
         'unit': obj,
         'operations': {},
+        # TODO: Add operation list
     }
     return render(request, "eim/unit_detail.html", context)
+
+def OperationList(request):
+    obj_list = Operation.objects.all()
+    print obj_list
+    context = {
+        'operation_list': obj_list,
+
+    }
+    return render(request, 'eim/operation_list.html', context)
+
+
+def OperationDetail(request, id=None):
+    if id is None:
+        raise Http404
+    obj = Operation.objects.get(id__exact=id)
+    context = {
+        'operation': obj,
+    }
+    return render(request, "eim/operation_detail.html", context)
+
+
+def OperationCreate(request):
+    form = OperationForm(request.POST)
+    if request.method == 'POST':
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            # message success
+            messages.success(request, "Successfully Created")
+        return redirect('operation_list')
+
+
+    context = {
+        'form': OperationForm,
+
+    }
+    return render(request, 'eim/operation_create.html', context)
