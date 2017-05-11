@@ -9,8 +9,41 @@
 
     <form action="" method="POST">
 
-    {{ form.as_p }}
-    <button class="btn btn-default" type="submit" >Submit</button>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_old_kcs_number">Old kcs number:</label>
+                <input class="form-control" type="text" name="old_kcs_number" id="id_old_kcs_number" maxlength="30" required=""></div>
+            <div class="form-group">
+                <label for="id_serial_number">Serial number:</label>
+                <input class="form-control" type="text" name="serial_number" required="" id="id_serial_number" maxlength="30"></div>
+            <div class="form-group">
+                <label for="id_type">Type:</label> <select class="form-control" name="type" required="" id="id_type">
+                <option value="" selected="">----</option>
+                <option value="SVRV5">Server V.5</option>
+                <option value="SVRV6">Server V.6</option>
+                <option value="JBOD">JBOD</option>
+                <option value="SWICH">Switch</option>
+            </select></div>
+            <div class="form-group">
+                <label for="id_new_kcs_number">New kcs number:</label>
+                <input class="form-control" type="text" name="new_kcs_number" id="id_new_kcs_number" maxlength="30">
+                <label for="id_status">Status:</label> <select class="form-control" name="status" id="id_status">
+                <option value="Created">Created</option>
+                <option value="Received">Received</option>
+                <option value="Testing">Testing</option>
+                <option value="Finished">Finished</option>
+                <option value="Packed">Packed</option>
+                <option value="Billed">Billed</option>
+            </select></div>
+            <div class="form-group">
+                <label for="id_memo">Memo:</label>
+                <input class="form-control" type="text" name="memo" id="id_memo" maxlength="2000" required=""></div>
+            <div class="form-group">
+                <input type="checkbox" name="is_active" id="id_is_active" hidden checked></div>
+            <button class="btn btn-default" type="submit">Submit</button>
+        </form>
+
     </form>
 
 

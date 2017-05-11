@@ -29,7 +29,7 @@
     <div>
         {% if UnitList %}
             {% for unit in UnitList %}
-                {{ unit.kcs_number }} has been received.<br/>
+                <a href="{% url 'unit_detail'  unit.id  %}">{{ unit.serial_number }}</a> has been received on {{ unit.receive_date }}.<br/>
             {% endfor %}
         {% else %}
             <p class="alert alert-danger">No records available!</p>

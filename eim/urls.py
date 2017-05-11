@@ -2,6 +2,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^UnitDetail/(?P<id>[0-9]+)/$', views.UnitDetail, name='unit_detail'),
     url(r'^UnitList/', views.UnitList, name='unit_list'),
     url(r'^UnitCreate/', views.UnitCreate, name='unit_create'),
     url(r'^OldKcsCreate/', views.OldKcsCreate, name='OldKcs_create'),

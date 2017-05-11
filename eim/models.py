@@ -39,7 +39,7 @@ class Operation(models.Model):
 class Unit(models.Model):
     TYPES_CHOICES = (
         ('SVRV5', 'Server V.5'),
-        ('SVRV6', 'Server V.5'),
+        ('SVRV6', 'Server V.6'),
         ('JBOD', 'JBOD'),
         ('SWICH', 'Switch'),
         )
@@ -55,14 +55,15 @@ class Unit(models.Model):
     id = models.AutoField(db_column="Id", primary_key=True)
     old_kcs_number = models.CharField(db_column="OldKcs", max_length=30, blank=True)
     serial_number = models.CharField(db_column="SerialNumber", max_length=30, unique=True, blank=False, null=False)
-    type = models.CharField(db_column="Type", max_length=3, choices=TYPES_CHOICES)
+    type = models.CharField(db_column="Type", max_length=5, choices=TYPES_CHOICES)
     new_kcs_number = models.CharField(db_column="NewKcsNumber", max_length=30, blank=True)
     status = models.CharField(db_column="Status", max_length=10, default='Created', choices=STATUS_CHOICES)
     memo = models.CharField(db_column="Memo", max_length=2000, blank=True)
+    receive_date = models.DateField(db_column="ReceiveDate", auto_now=True)
     is_active = models.BooleanField(db_column="IsActive", default=True, blank=False, null=False)
 
     class Meta:
         managed = True
 
     def __str__(self):
-        return self.unit_serial_number
+        return self.serial_number

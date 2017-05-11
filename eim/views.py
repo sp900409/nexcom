@@ -15,9 +15,8 @@ def home(request):
     return render(request, 'eim/home.html')
 
 
-def mainpage(request):
+def main_page(request):
     return render(request, 'index.html')
-
 
 
 def OldKcsList(request):
@@ -87,8 +86,8 @@ def UnitList(request):
 def UnitCreate(request):
     form = UnitForm(request.POST)
     if request.method == 'POST':
-        # if not request.user.is_staff or not request.user.is_superuser:
-        #     raise Http404
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -102,3 +101,15 @@ def UnitCreate(request):
             "form": form,
         }
         return render(request, 'eim/unit_create.html', context)
+
+
+def UnitDetail(request, id=None):
+    if id is None:
+        raise Http404
+    obj = Unit.objects.get(id__exact=id)
+    print obj.serial_number
+    context = {
+        'unit': obj,
+        'operations': {},
+    }
+    return render(request, "eim/unit_detail.html", context)

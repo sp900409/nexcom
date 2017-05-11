@@ -1,0 +1,21 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/unit_detail.html</h2>
+    {% if messages %} {% for message in messages %}
+        <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}{% endif %}
+    <div class="row">
+        {% if unit %}
+            Here will show more information about <b>{{ unit.serial_number }}</b>!
+            {{ unit.id }}\{{ unit.old_kcs_number }}\{{ unit.type }}\{{ unit.new_kcs_number }}\{{ unit.memo }}\{% if unit.is_active %}Unit is still in process{% endif %}
+            <br />
+            <p>Operation done: Qty of operation & List }}</p>
+            {# TODO: Add operation list here #}
+            <hr />
+        {% endif %}
+
+    </div>
+
+{% endblock %}
