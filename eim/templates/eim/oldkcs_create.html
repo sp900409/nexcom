@@ -1,0 +1,30 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/oldkcs_create</h2>
+
+    <div class="col-md-6 col-sm-12 col-lg-6">
+    <form action="{% url 'OldKcs_create' %}" method="POST" enctype='multipart/form-data'>
+        {#        <table>#}
+        {#            {% csrf_token %}#}
+        {#            {{ form.as_table }}#}
+        {#        </table>#}
+
+
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_kcs_number">Kcs number:</label>
+            <input class="form-control" type="text" name="kcs_number" required id="id_kcs_number" maxlength="20"/>
+        </div>
+        <div class="form-group">
+            <label for="id_detail">Detail:</label>
+
+            <textarea class="form-control" name="detail" id="id_detail" cols="30" rows="5" maxlength="200"></textarea>
+        </div>
+        <input type="submit" class="btn btn-default" value="Receive"/>
+    </form>
+</div>
+
+
+{% endblock %}

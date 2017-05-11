@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4 col-md-3 sidebar">
+            {% include 'eim/sidebar.html' %}
+        </div>
+
+        <div class="col-md-8 col-xs-12">
+            {% block detail %}
+            {% endblock %}
+        </div>
+
+    </div>
+{% endblock %}

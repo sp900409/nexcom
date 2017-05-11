@@ -1,0 +1,53 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/receive</h2>
+    <div class="row">
+        <form method='GET' action=''>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="q">Search exist record:</label>
+                    <input class="form-control" type='text' name='q' placeholder='Search KCS'
+                           value='{{ request.GET.q }}'/>
+                </div>
+                <div class="form-group">
+                    <input type='submit' class="btn btn-info" value='Search'/>
+                </div>
+            </div>
+        </form>
+        <a href="{% url 'OldKcs_create' %}" class="btn btn-success" type="submit">Add new shipment</a>
+    </div>
+    <hr />
+
+    <div>
+        {% if OldKcsList %}
+            {% for kcs in OldKcsList %}
+                {{ kcs.kcs_number }} has been received on {{ kcs.receive_date }}<br/>
+            {% endfor %}
+
+        {% else %}
+            <p class="alert alert-danger">No records available!</p>
+
+        {% endif %}
+    </div>
+    {# TODO: Add pagination here #}
+{#    <div class="pagination">#}
+{#    <span class="step-links">#}
+{#        {% if object_list.has_previous %}#}
+{#            <a href="?{{ page_request_var }}=#}
+{#                    {{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>#}
+{#        {% endif %}#}
+{##}
+{#        <span class="current">#}
+{#            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.#}
+{#        </span>#}
+{##}
+{#        {% if object_list.has_next %}#}
+{#            <a href="?{{ page_request_var }}=#}
+{#                    {{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>#}
+{#        {% endif %}#}
+{#    </span>#}
+{#    </div>#}
+
+{% endblock %}
