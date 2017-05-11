@@ -1,0 +1,40 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/unit_list.html</h2>
+    {% if messages %} {% for message in messages %}
+        <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}{% endif %}
+    <div class="row">
+        <form method='GET' action=''>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="q">Search serial number:</label>
+                    <input class="form-control" type='text' name='q' placeholder='Search SN'
+                           value='{{ request.GET.q }}'/>
+                </div>
+                <div class="form-group">
+                    <input type='submit' class="btn btn-info" value='Search'/>
+                </div>
+                <div class="form-group">
+                    <a href="{% url 'unit_create' %}" class="btn btn-success" type="submit">Add new unit</a>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+
+    <div>
+        {% if UnitList %}
+            {% for unit in UnitList %}
+                {{ unit.kcs_number }} has been received.<br/>
+            {% endfor %}
+        {% else %}
+            <p class="alert alert-danger">No records available!</p>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

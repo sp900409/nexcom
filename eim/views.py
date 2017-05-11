@@ -5,10 +5,10 @@ from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
-from eim.forms import OldKcsForm
-from eim.models import OldKcs
+from eim.forms import OldKcsForm, UnitForm
+from eim.models import OldKcs, Unit
 
 
 def home(request):
@@ -22,7 +22,7 @@ def mainpage(request):
 
 def OldKcsList(request):
     query = request.GET.get('q')
-    obj_list = OldKcs.objects.all()
+    obj_list = OldKcs.objects.all().order_by('-receive_date')
 
     if query:
         obj_list = obj_list.filter(
@@ -50,18 +50,55 @@ def OldKcsList(request):
 
 
 def OldKcsCreate(request):
-    # if not request.user.is_staff or not request.user.is_superuser:
-    #     raise Http404
-
     form = OldKcsForm(request.POST)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.user = request.user
-        instance.save()
-        # message success
-        messages.success(request, "Successfully Created")
-        return HttpResponseRedirect('eim/oldkcs.html')
+    if request.method == 'POST':
+        # if not request.user.is_staff or not request.user.is_superuser:
+        #     raise Http404
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            # message success
+            messages.success(request, "Successfully Created")
+        return redirect('receive_kcs')
+    else:
+        context = {
+            "form": form,
+        }
+        return render(request, 'eim/oldkcs_create.html', context)
+
+
+def UnitList(request):
+    query = request.GET.get('q')
+    obj_list = Unit.objects.all().order_by('new_kcs_number')
+
+    if query:
+        obj_list = obj_list.filter(
+            Q(serial_number__icontains=query)
+        ).distinct()
+
     context = {
-        "form": form,
+        'UnitList': obj_list,
     }
-    return render(request, 'eim/oldkcs_create.html', context)
+    return render(request, "eim/unit_list.html", context)
+
+
+def UnitCreate(request):
+    form = UnitForm(request.POST)
+    if request.method == 'POST':
+        # if not request.user.is_staff or not request.user.is_superuser:
+        #     raise Http404
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            # message success
+            messages.success(request, "Successfully Created")
+        return redirect('unit_list')
+    else:
+        context = {
+            "form": form,
+        }
+        return render(request, 'eim/unit_create.html', context)

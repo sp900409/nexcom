@@ -1,0 +1,18 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/create.html</h2>
+    {% if messages %} {% for message in messages %}
+        <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}{% endif %}
+
+    <form action="" method="POST">
+
+    {{ form.as_p }}
+    <button class="btn btn-default" type="submit" >Submit</button>
+    </form>
+
+
+
+{% endblock %}
