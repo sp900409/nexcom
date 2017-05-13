@@ -11,7 +11,7 @@ class OldKcsManager(models.Manager):
 
 class OldKcs(models.Model):
     id = models.AutoField(db_column='Id', primary_key=True)
-    receive_date = models.DateField(db_column='ReceiveDate', auto_now=True, blank=False, null=False)
+    receive_date = models.DateField(db_column='ReceiveDate', auto_now=True)
     kcs_number = models.CharField(db_column='OldKcsNumber', unique=True, max_length=20, blank=False, null=False,
                                   default="Error Input")
     detail = models.CharField(db_column='Detail', max_length=200, blank=True, null=False)
@@ -25,7 +25,7 @@ class OldKcs(models.Model):
 
 class Operation(models.Model):
     id = models.AutoField(db_column="Id", primary_key=True)
-    operation_time = models.DateTimeField(db_column="OperationTime", default=timezone.now, blank=False, null=False)
+    operation_time = models.DateTimeField(db_column="OperationTime", auto_now=True, blank=False, null=False)
     target = models.CharField(db_column="Target", max_length=50, blank=False, null=True)
     action_type = models.CharField(db_column="Action_type", max_length=50, blank=False, null=False)
     content = models.CharField(db_column="Content", max_length=2000, blank=False, null=True)
