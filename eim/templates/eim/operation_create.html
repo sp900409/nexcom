@@ -6,17 +6,46 @@
     {% if messages %} {% for message in messages %}
         <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
     {% endfor %}{% endif %}
+    <div class="row">
+        <div class="col-md-8 col-xs-12 col-lg-6">
+            <form action="" method="POST" name="operation_form" onsubmit="return validateForm()">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_target">Target:</label>
+                    <input class="form-control" name="target" id="id_target" required="" type="text"
+                           maxlength="50"></div>
+                <div class="form-group">
+                    <label for="id_action_type">Action type:</label>
+                    <input class="form-control" name="action_type" id="id_action_type" required="" type="text"
+                           maxlength="50"></div>
+                <div class="form-group">
+                    <label for="id_content">Content:</label>
+                    <input class="form-control" name="content" id="id_content" required="" type="text" maxlength="2000">
+                </div>
 
-    <form action="" method="POST">
+                <button class="btn btn-default" type="submit">Submit</button>
 
-        <form action="" method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <button class="btn btn-default" type="submit">Submit</button>
-        </form>
 
-    </form>
+            </form>
+        </div>
+        <div class="col-md-4 col-xs-12 col-lg-4">
+            <p>{% for each in active_list %}
+                {{ each }}/
 
+            {% endfor %}</p>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            var target = document.forms["operation_form"]["target"].value.toUpperCase();
+            var re_target = /^\d{7}$|^SHG\d{7}G\d[a-zA-Z0-9]{3}$|^MT\d{4}X\d{5}|KCS\d{4}/
+            {#            var re_kcs = /^KCS\d{4}$/#}
+            if (re_target.test(target) == false) {
+                alert("Operation target invalid or format incorrect");
+                return false;
+            }
+        }
+    </script>
 
 
 {% endblock %}

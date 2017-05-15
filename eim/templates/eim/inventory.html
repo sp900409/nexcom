@@ -1,0 +1,37 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+
+    <h2>Page PATH /eim/inventory.html</h2>
+    {% if messages %} {% for message in messages %}
+        <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
+    {% endfor %}{% endif %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>EIM PN</th>
+            <th>KAM PN</th>
+            <th>DESCRIPTION</th>
+            <th>EIM BAL</th>
+            <th>KAM BAL</th>
+            <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for component in component_list %}
+            <tr>
+
+                <td>{{ component.eim_pn }}</td>
+                <td>{{ component.kam_pn }}</td>
+                <td>{{ component.description }}</td>
+                <td>{{ component.eim_balance }}</td>
+                <td>{{ component.kam_balance }}</td>
+                <td>{{ component.total }} </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

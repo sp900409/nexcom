@@ -8,12 +8,19 @@
     {% endfor %}{% endif %}
 
     <div>
+        <a href="{% url 'operation_create' %}" class="btn btn-success">Add Operation</a>
+    </div>
+
+    <div>
         {% if operation_list %}
             {% for operation in operation_list %}
-                <a href="{% url 'operation_detail'  operation.id  %}">{{ operation.target }}</a>
+                At {{ operation.time }} <br/>
+                Target:<a href="{% url 'operation_detail'  operation.id %}">{{ operation.target }}</a><br/> Action: {{ operation.content }}
+<hr/>
             {% endfor %}
         {% else %}
-            <p class="alert alert-danger">No records available! Add  a record <a href="{% url 'operation_create' %}   ">here</a>.</p>
+            <p class="alert alert-danger">No records available! Add a record <a href="{% url 'operation_create' %}   ">here</a>.
+            </p>
         {% endif %}
     </div>
 

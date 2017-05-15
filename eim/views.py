@@ -8,7 +8,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
 from eim.forms import OldKcsForm, UnitForm, OperationForm
-from eim.models import OldKcs, Unit, Operation
+from eim.models import OldKcs, Unit, Operation, NewKcs, Component
 
 
 def home(request):
@@ -107,16 +107,19 @@ def UnitDetail(request, id=None):
     if id is None:
         raise Http404
     obj = Unit.objects.get(id__exact=id)
-    print obj.serial_number
+
+    obj_operation = Operation.objects.filter(
+        Q(target__exact=obj.serial_number)
+        )
+
     context = {
         'unit': obj,
-        'operations': {},
-        # TODO: Add operation list
+        'operations': obj_operation,
     }
     return render(request, "eim/unit_detail.html", context)
 
 def OperationList(request):
-    obj_list = Operation.objects.all()
+    obj_list = Operation.objects.all().order_by("-time")
     print obj_list
     context = {
         'operation_list': obj_list,
@@ -149,9 +152,43 @@ def OperationCreate(request):
             messages.success(request, "Successfully Created")
         return redirect('operation_list')
 
+    active_list = []
+
+    get_active_instance = OldKcs.objects.active()
+    for obj in get_active_instance:
+        active_list.append(obj.kcs_number)
+
+    get_active_instance = Unit.objects.active()
+    for obj in get_active_instance:
+        active_list.append(obj.serial_number)
+
+    get_active_instance = NewKcs.objects.active()
+    for obj in get_active_instance:
+        active_list.append(obj.kcs_number)
 
     context = {
-        'form': OperationForm,
-
+        'form': form,
+        'active_list': active_list
     }
     return render(request, 'eim/operation_create.html', context)
+
+
+def TergetValidation(request):
+
+    return True
+
+
+def ShowInventory(request):
+    component_list = Component.objects.all()
+    for component in component_list:
+        component.total = component.eim_balance+ component.kam_balance
+
+    context = {
+        'component_list': component_list,
+    }
+    return render(request, 'eim/inventory.html', context)
+
+
+def InventoryTransactionDetail(request):
+    # TODO: add transaction view
+    pass

@@ -8,12 +8,31 @@
     {% endfor %}{% endif %}
     <div class="row">
         {% if unit %}
-            Here will show more information about <b>{{ unit.serial_number }}</b>!
-            {{ unit.id }}\{{ unit.old_kcs_number }}\{{ unit.type }}\{{ unit.new_kcs_number }}\{{ unit.memo }}\{% if unit.is_active %}Unit is still in process{% endif %}
-            <br />
-            <p>Operation done: Qty of operation & List }}</p>
-            {# TODO: Add operation list here #}
-            <hr />
+
+            <b>{{ unit.serial_number }}</b><br/>
+
+            System ID: {{ unit.id }}<br/>
+            Old KCS Number: {{ unit.old_kcs_number }}<br/>
+            Unit type{{ unit.type }}New Kcs Number: {{ unit.new_kcs_number }}<br/>
+            Receive Impression: {{ unit.memo }}<br/>
+            {% if unit.is_active %}Unit is still in process
+            {% else %}Unit is finished process!
+            {% endif %}
+            <br/>
+            <hr/>
+            {% if operations %}
+                <p>Operation done in Nexcom site: </p><br/>
+
+                <ul>
+                    {% for operation in operations %}
+                        <li>{{ operation.time }} => {{ operation.content }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="alert alert-warning">No operation information found!</p>
+            {% endif %}
+        {% else %}
+            Unit doesn't exist
         {% endif %}
 
     </div>
