@@ -48,7 +48,8 @@ def OldKcsList(request):
     return render(request, "eim/oldkcs.html", context)
 
 
-def OldKcsCreate(request):
+def OldKcsCreate(request, instance=None):
+
     form = OldKcsForm(request.POST)
     if request.method == 'POST':
         # if not request.user.is_staff or not request.user.is_superuser:
