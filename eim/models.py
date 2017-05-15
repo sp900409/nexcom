@@ -110,7 +110,7 @@ class Component(models.Model):
     eim_balance = models.IntegerField(default=0)
     kam_balance = models.IntegerField(default=0)
     update_date = models.DateTimeField(auto_now=True)
-    create_date = models.DateTimeField(auto_now=True)
+    create_date = models.DateTimeField(auto_now=False)
 
     class Meta:
         managed = True
@@ -124,7 +124,6 @@ class Component(models.Model):
 
 class Transaction(models.Model):
     time = models.DateTimeField(auto_now=True, blank=False)
-# TODO: add EIM PN & KAM PN
     memo = models.CharField(max_length=200, blank=False, default='No memo input!')
 
     class Meta:
@@ -132,4 +131,4 @@ class Transaction(models.Model):
         ordering = ['time']
 
     def __str__(self):
-        pass
+        return str(self.time) + '\t' + self.memo

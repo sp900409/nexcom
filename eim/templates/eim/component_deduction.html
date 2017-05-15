@@ -1,0 +1,41 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+    <h2 class="hidden">Page PATH /eim/component_deduction.html</h2>
+    {% if messages %}{% for message in messages %}
+        <p {% if message.tags %}class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% endif %}"{% endif %}>{{ message }}</p>
+    {% endfor %}{% endif %}
+
+    <div>
+        <h3>{{ component.description }}</h3><br/>
+        EIM PN: {{ component.eim_pn }}<br/>
+        Kaminario PN{{ component.kam_pn }}<br/>
+        EIM Balance:{{ component.eim_balance }}<br/>
+        Kaminario Balance:{{ component.kam_balance }}<br/>
+        This part was create on: {{ component.create_date }}<br/>
+        Last update was on {{ component.update_date }}
+    </div>
+
+
+    <h4>Deduction form</h4>
+    <p>Fill deduction value in below form, the balance cannot lower than zero and transaction will be recorded by the
+        system</p>
+    <div class="col-lg-6  col-xs-12">
+        <form action="{% url "component_deduction" component.id %}" method="POST">{% csrf_token %}
+            <div class="form-group">
+                <label for="id_eim_deduct">Eim balance:</label>
+                <input class="form-control" name="eim_deduct" id="id_eim_deduct" required="" type="number"><br/></div>
+            <div class="form-group">
+                <label for="id_kam_deduct">Kam balance:</label>
+                <input class="form-control" name="kam_deduct" id="id_kam_deduct" required="" type="number"><br/></div>
+            <div class="form-group">
+                <label for="id_reason">Reason</label>
+                <input class="form-control" name="deduction_reason" id="id_reason" required="" type="text"><br/></div>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+
+        </form>
+    </div>
+{% endblock %}
+
+

@@ -1,5 +1,5 @@
 from django import forms
-from models import OldKcs, Unit, Operation
+from models import OldKcs, Unit, Operation, Component
 
 
 class OldKcsForm(forms.ModelForm):
@@ -24,4 +24,12 @@ class OperationForm(forms.ModelForm):
         model = Operation
         fields = [
             "target", "action_type", "content",
+        ]
+
+
+class ComponentForm(forms.ModelForm):
+    class Meta:
+        model = Component
+        fields = [
+            "eim_pn", "kam_pn", "eim_balance", "kam_balance", "description",
         ]

@@ -7,10 +7,10 @@ from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
-from eim.forms import OldKcsForm, UnitForm, OperationForm
-from eim.models import OldKcs, Unit, Operation, NewKcs, Component
+from eim.forms import OldKcsForm, UnitForm, OperationForm, ComponentForm
+from eim.models import OldKcs, Unit, Operation, NewKcs, Component, Transaction
 
-
+from django.utils import timezone
 def home(request):
     return render(request, 'eim/home.html')
 
@@ -181,7 +181,7 @@ def TergetValidation(request):
 def ShowInventory(request):
     component_list = Component.objects.all()
     for component in component_list:
-        component.total = component.eim_balance+ component.kam_balance
+        component.total = component.eim_balance + component.kam_balance
 
     context = {
         'component_list': component_list,
@@ -189,6 +189,51 @@ def ShowInventory(request):
     return render(request, 'eim/inventory.html', context)
 
 
-def InventoryTransactionDetail(request):
+def InventoryTransactionList(request, id=None):
     # TODO: add transaction view
     pass
+
+
+def ComponentDetail(request, id=None):
+    if id is None:
+        raise Http404
+    obj = Component.objects.get(id__exact=id)
+
+    context = {
+        'component': obj,
+    }
+    return render(request, "eim/component_detail.html", context)
+
+def ComponentDeduction(request, id):
+    component = Component.objects.get(id=id)
+
+    if request.method == 'POST':
+        # if not request.user.is_staff or not request.user.is_superuser:
+        #     raise Http404
+        eim_diff = request.POST.get('eim_deduct')
+        kam_diff = request.POST.get('kam_deduct')
+        reason = request.POST.get('deduction_reason')
+
+        if component.eim_balance-long(eim_diff) >= 0 and component.kam_balance-long(kam_diff) >= 0: # input is OK
+            component.eim_balance -= long(eim_diff)
+            component.kam_balance -= long(kam_diff)
+            component.update_date = timezone.now
+
+            tmp = Transaction.objects.create()
+            tmp.time = timezone.now
+            tmp.memo = component.eim_pn + ":" + "eim_balance deduct->" + str(long(eim_diff)) + "\t" + \
+                               "kam_balance deduct->" + str(long(kam_diff)) + "\nreason:" + reason
+
+            tmp.save()
+            component.save()
+            messages.success(request, "Successfully making change")
+
+        else:       # input not good
+            messages.error(request, "balance cannot lower than zero!!!")
+
+        return redirect('component_detail', id=component.id)
+    else:       # request is GET
+        context = {
+            "component": component,
+        }
+        return render(request, 'eim/component_deduction.html', context)

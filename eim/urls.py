@@ -2,7 +2,9 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^component_detail/(?P<id>[0-9]+)', views.ComponentDetail, name='component_detail'),
+
+    url(r'^componentDeduction/(?P<id>[0-9]+)/$', views.ComponentDeduction, name='component_deduction'),
+    url(r'^componentDetail/(?P<id>[0-9]+)/$', views.ComponentDetail, name='component_detail'),
     url(r'^inventory/', views.ShowInventory, name='show_inventory'),
     url(r'^TargetValidation/',views.TergetValidation, name='target_validation'),
     url(r'^OperationCreate/', views.OperationCreate, name='operation_create'),

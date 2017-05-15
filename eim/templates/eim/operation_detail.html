@@ -1,7 +1,7 @@
 {#{% extends 'eim/eim_template.html' %}#}
 {##}
 {#{% block detail %}#}
-    <h2>Page PATH /eim/operation_detail.html</h2>
+    <h2 class="hidden">Page PATH /eim/operation_detail.html</h2>
     {% if messages %}
         {% for message in messages %}
             <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib import admin
-from .models import Unit, Operation, OldKcs
+from .models import Unit, Operation, OldKcs, Transaction, Component, NewKcs
 
 
 class UnitAdmin(admin.ModelAdmin):
@@ -17,8 +17,12 @@ class UnitAdmin(admin.ModelAdmin):
 
 
 admin.site.register(OldKcs)
+admin.site.register(NewKcs)
 admin.site.register(Operation)
 admin.site.register(Unit, UnitAdmin)
+admin.site.register(Component)
+admin.site.register(Transaction)
+
 
 admin.site.site_title = 'My site'
 admin.site.site_header = "Nexcom RMA Management System"

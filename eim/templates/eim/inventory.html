@@ -2,7 +2,7 @@
 
 {% block detail %}
 
-    <h2>Page PATH /eim/inventory.html</h2>
+    <h2 class="hidden">Page PATH /eim/inventory.html</h2>
     {% if messages %} {% for message in messages %}
         <p  {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message }}</p>
     {% endfor %}{% endif %}
@@ -22,7 +22,7 @@
         {% for component in component_list %}
             <tr>
 
-                <td>{{ component.eim_pn }}</td>
+                <td><a href="{%  url 'component_detail' component.id %}" >{{ component.eim_pn }}</a> </td>
                 <td>{{ component.kam_pn }}</td>
                 <td>{{ component.description }}</td>
                 <td>{{ component.eim_balance }}</td>

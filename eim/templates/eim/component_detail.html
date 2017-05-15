@@ -1,0 +1,24 @@
+{% extends 'eim/eim_template.html' %}
+
+{% block detail %}
+    <h2 class="hidden">Page PATH /eim/component_detail.html</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <p {% if message.tags %}class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'success' %}success{% endif %}"{% endif %}>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        {% if component %}
+            <h3>Item: {{ component.eim_pn }}</h3> <br/>
+            <p>Kaminario PN: {{ component.kam_pn }}</p><br/>
+            <p>EIM Balance: {{ component.eim_balance }}</p><br/>
+            <p>KAM balance: {{ component.kam_balance }}</p><br/>
+            <p>Description: {{ component.description }}</p><br/>
+            <p><a class="btn btn-info" href="{% url "component_deduction" component.id %}">Change balance</a></p>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+
