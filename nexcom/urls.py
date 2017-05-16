@@ -21,5 +21,6 @@ from eim import views as eim_views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^eim/', include('eim.urls')),
+    url(r'^auth/', include('auth.urls')),
     url(r'', eim_views.main_page, name='index')
 ]

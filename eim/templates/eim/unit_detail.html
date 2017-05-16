@@ -20,6 +20,9 @@
             {% endif %}
             <br/>
             <hr/>
+            <div>
+                <a href="{% url 'operation_create' %}" class="btn btn-success">Add Operation</a>
+            </div>
             {% if operations %}
                 <p>Operation done in Nexcom site: </p><br/>
 
@@ -28,7 +31,7 @@
                         <li>{{ operation.time }} => {{ operation.content }}</li>
                     {% endfor %}
                 </ul>
-                {% else %}
+            {% else %}
                 <p class="alert alert-warning">No operation information found!</p>
             {% endif %}
         {% else %}

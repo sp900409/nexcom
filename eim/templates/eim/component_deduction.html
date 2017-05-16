@@ -23,10 +23,10 @@
     <div class="col-lg-6  col-xs-12">
         <form action="{% url "component_deduction" component.id %}" method="POST">{% csrf_token %}
             <div class="form-group">
-                <label for="id_eim_deduct">Eim balance:</label>
+                <label for="id_eim_deduct">Eim Deduct:</label>
                 <input class="form-control" name="eim_deduct" id="id_eim_deduct" required="" type="number"><br/></div>
             <div class="form-group">
-                <label for="id_kam_deduct">Kam balance:</label>
+                <label for="id_kam_deduct">Kam Deduct:</label>
                 <input class="form-control" name="kam_deduct" id="id_kam_deduct" required="" type="number"><br/></div>
             <div class="form-group">
                 <label for="id_reason">Reason</label>
